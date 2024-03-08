@@ -66,7 +66,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
       })
       .catch(error => {
         handleRegisterError(error)
-        console.error(error);
+        console.log(error);
       });
 
     return;
@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     color: "#DEC109",
     marginLeft: 5,
+    fontWeight: 'bold',
   },
   inputTextContainer: {
     flexDirection: "row",

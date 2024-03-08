@@ -44,13 +44,12 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
 
     signInUser(email, password)
       .then(data => {
-        console.log('Login success!:', data.user.uid);
-        // loadUserProfile(userCred.user.uid);
+        Alert.alert("User logged in successfully!");
         navigation.navigate('TabBar');
       })
       .catch(error => {
         handleLoginError(error);
-        console.error(error);
+        console.log(error);
       });
   }
 
@@ -206,7 +205,9 @@ const styles = StyleSheet.create({
   },
   signupText: {
     textDecorationLine: "underline", 
-    color: "#DEC109"
+    color: "#DEC109",
+    fontWeight: 'bold',
+    fontSize: 14,
   },
   input: {
     width: "100%",
@@ -226,6 +227,7 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     color: "#DEC109",
     textDecorationLine: "underline",
+    fontWeight: 'bold',
   },
   loginButton: {
     height: 50,
