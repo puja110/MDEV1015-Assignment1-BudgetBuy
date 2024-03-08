@@ -45,6 +45,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     signInUser(email, password)
       .then(data => {
         console.log('Login success!:', data.user.uid);
+        // loadUserProfile(userCred.user.uid);
         navigation.navigate('TabBar');
       })
       .catch(error => {

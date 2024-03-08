@@ -9,8 +9,7 @@ import {
   Alert,
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import auth from '@react-native-firebase/auth';
-import AuthController from '../../../services/api.service';
+import { logOutUser } from '../../../services/api.service';
 
 interface MyProfileProps {
   navigation: any;
@@ -19,15 +18,14 @@ interface MyProfileProps {
 const MyProfile: React.FC<MyProfileProps> = ({ navigation }) => {
 
   const handleUserLogout = async () => {
-    const { success, error } = await AuthController.signOut();
-
-    if (success) {
-      // Navigate to Login screen if registration is successful
-      navigation.push("Login")
-      Alert.alert("User has logged out successfully!")
-    } else {
-      console.error(error);
-    }
+    logOutUser()
+      .then(data => {
+        navigation.push("Login")
+        Alert.alert("User has logged out successfully!")
+      })
+      .catch(error => {
+        console.error(error);
+      });
   };
 
   return (
