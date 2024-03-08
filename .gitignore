@@ -1,0 +1,26 @@
+# OSX
+#
+.DS_Store
+
+# node.js
+#
+node_modules/
+yarn.lock
+package-lock.json
+
+# Xcode
+#
+/ios/Pods/
+/ios/Podfile.lock
+build/
+*.ipa
+*.xcuserstate
+project.xcworkspace
+
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
