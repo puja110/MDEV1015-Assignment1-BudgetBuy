@@ -20,7 +20,10 @@ const MyProfile: React.FC<MyProfileProps> = ({ navigation }) => {
   const handleUserLogout = async () => {
     logOutUser()
       .then(data => {
-        navigation.push("Login")
+        navigation.reset({
+          index: 0,
+          routes: [{name: 'Login'}],
+        });
         Alert.alert("User has logged out successfully!")
       })
       .catch(error => {

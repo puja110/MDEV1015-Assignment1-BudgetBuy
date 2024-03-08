@@ -61,8 +61,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
 
     signUpUser(email, password)
       .then(() => {
-        console.log('User account created successfully!');
-        Alert.alert('Success, please login');
+        Alert.alert('User account created successfully!');
         navigation.goBack();
       })
       .catch(error => {
