@@ -24,10 +24,10 @@ const MyProfile: React.FC<MyProfileProps> = ({ navigation }) => {
           index: 0,
           routes: [{name: 'Login'}],
         });
-        Alert.alert("User has logged out successfully!")
+        Alert.alert("User signed out!")
       })
       .catch(error => {
-        console.error(error);
+        console.log(error);
       });
   };
 
