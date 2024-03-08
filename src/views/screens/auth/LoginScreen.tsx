@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import AuthController from '../../../controller/AuthController';
+import AuthController from '../../../services/api.service';
 
 type RootStackParamList = {
   ForgotPassword: undefined;
@@ -38,7 +38,25 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
     if (success) {
       navigation.navigate('TabBar'); 
     } else {
-      handleLoginError(error)
+      if(email === '') {
+        Alert.alert("Please enter your email address!");
+      } else if(password === '') {
+        Alert.alert("Please enter your password!");
+      } 
+      
+      if (error.code === 'auth/invalid-email') {
+        Alert.alert("The email address is invalid!");
+      } 
+      if (error.code === 'auth/wrong-password' || error.code === 'auth/weak-password') {
+        Alert.alert("The password is invalid!");
+      } 
+      if(error.code === 'auth/network-request-failed') {
+        Alert.alert("Please check your network connection!");
+      } 
+      if(error.code === 'auth/invalid-credential') {
+        Alert.alert("Please enter the valid credentials!");
+      }
+      
       console.error(error);
     }
   };
@@ -48,11 +66,18 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       Alert.alert("Please enter your email address!");
     } else if(password === '') {
       Alert.alert("Please enter your password!");
-    } else if (error.code === 'auth/invalid-email') {
+    } 
+    
+    if (error.code === 'auth/invalid-email') {
       Alert.alert("The email address is invalid!");
-    } else if (error.code === 'auth/wrong-password') {
+    } 
+    if (error.code === 'auth/wrong-password' || error.code === 'auth/weak-password') {
       Alert.alert("The password is invalid!");
-    } else if(error.code === 'auth/invalid-credential') {
+    } 
+    if(error.code === 'auth/network-request-failed') {
+      Alert.alert("Please check your network connection!");
+    } 
+    if(error.code === 'auth/invalid-credential') {
       Alert.alert("Please enter the valid credentials!");
     }
   }
@@ -72,6 +97,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
             <TextInput
               style={styles.input}
               placeholder="Email"
+              placeholderTextColor={'grey'}
               keyboardType="email-address"
               value={email}
               onChangeText={val => setEmail(val)}
@@ -80,6 +106,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
               <TextInput
                 style={styles.input}
                 placeholder="Password"
+                placeholderTextColor={'grey'}
                 secureTextEntry={hidePassword}
                 value={password}
                 onChangeText={val => setPassword(val)}

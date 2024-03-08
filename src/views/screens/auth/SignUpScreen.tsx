@@ -11,7 +11,8 @@ import {
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import AuthController from '../../../controller/AuthController';
+import { validateEmail } from '../../../helpers';
+import { signUpUser } from '../../../services/api.service';
 
 export type RootStackParamList = {
   MainOnboarding: undefined;
@@ -32,29 +33,53 @@ interface SignUpScreenProps {
 
 const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
   
-  const [hidePassword, setHidePassword] = useState(true);
+  const [hidePassword, setHidePassword] = useState(true);    
+  const [hideConfirmPassword, setHideConfirmPassword] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleRegister = async () => {
-    const { success, error } = await AuthController.signUp(email, password);
-
-    if (success) {
-      // Navigate to Login screen if registration is successful
-      navigation.navigate('Login');
-    } else {
-      handleRegisterError(error)
-      console.error(error);
+  async function handleRegister() {
+    if (email.length <= 0) {
+      Alert.alert('Please enter a email');
+      return;
     }
-  };
-  
+
+    if (!validateEmail(email)) {
+      Alert.alert('Please enter a valid email');
+      return;
+    }
+    if (password.length <= 0) {
+      Alert.alert('Please enter a password');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Please confirm password');
+      return;
+    }
+
+    signUpUser(email, password)
+      .then(() => {
+        console.log('User account created & signed in!');
+        Alert.alert('Success, please login');
+        navigation.goBack();
+      })
+      .catch(error => {
+        handleRegisterError(error)
+        console.error(error);
+      });
+
+    return;
+  }
+
   const handleRegisterError = (error) => {
     if (error.code === 'auth/email-already-in-use') {
       Alert.alert("Email address is already in use!");
     }
 
     if (error.code === 'auth/weak-password') {
-      Alert.alert("Enter the valid password!");
+      Alert.alert("Enter the strong password!");
     }
 
     if (error.code === 'auth/invalid-email') {
@@ -74,6 +99,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
             <TextInput 
               style={styles.input} 
               placeholder="Email Address" 
+              placeholderTextColor={'grey'}
               value={email}
               onChangeText={val => setEmail(val)}
               />
@@ -81,6 +107,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
               <TextInput
                 style={styles.inputPassword}
                 placeholder="Password"
+                placeholderTextColor={'grey'}
                 secureTextEntry={hidePassword}
                 value={password}
                 onChangeText={val => setPassword(val)}
@@ -92,6 +119,24 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
                 <Ionicons name={hidePassword ? "eye" : "eye-off"} size={24} color="gray" />
               </TouchableOpacity>
             </View>
+
+            <View style={styles.inputTextContainer}>
+              <TextInput
+                style={styles.inputPassword}
+                placeholder="Confirm Password"
+                placeholderTextColor={'grey'}
+                secureTextEntry={hideConfirmPassword}
+                value={confirmPassword}
+                onChangeText={val => setConfirmPassword(val)}
+              />
+              <TouchableOpacity
+                style={styles.passwordIcon}
+                onPress={() => setHideConfirmPassword(!hideConfirmPassword)}
+              >
+                <Ionicons name={hideConfirmPassword ? "eye" : "eye-off"} size={24} color="gray" />
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity
               style={styles.createAccountButton}
               onPress={() => handleRegister()}
@@ -136,14 +181,13 @@ const styles = StyleSheet.create({
   signupText: {
     fontSize: 35,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 24,
   },
   input: {
     width: "100%",
     height: 50,
     borderColor: "gray",
-    borderWidth: 0.8,
-    marginBottom: 20,
+    borderWidth: 1,
     paddingHorizontal: 10,
     borderRadius: 20,
     backgroundColor: "#ededed",
@@ -163,7 +207,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 15,
-    marginTop: 10,
+    marginTop: 32,
   },
   createAccountButtonText: {
     color: "white",
@@ -184,6 +228,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     position: "relative",
+    marginTop: 20,
   },
   passwordIcon: {
     position: "absolute",

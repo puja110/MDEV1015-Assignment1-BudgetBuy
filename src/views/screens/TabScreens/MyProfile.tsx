@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import auth from '@react-native-firebase/auth';
-import AuthController from '../../../controller/AuthController';
+import AuthController from '../../../services/api.service';
 
 interface MyProfileProps {
   navigation: any;
