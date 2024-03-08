@@ -7,3 +7,7 @@ export function signUpUser(email, password): Promise<any> {
 export function signInUser(email, password) {
   return auth().signInWithEmailAndPassword(email, password);
 }
+
+export function logOutUser() {
+  return auth().signOut();
+}

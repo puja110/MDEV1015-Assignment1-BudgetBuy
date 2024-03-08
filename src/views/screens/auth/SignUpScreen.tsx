@@ -39,18 +39,18 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  async function handleRegister() {
+  const handleRegister = async() => {
     if (email.length <= 0) {
-      Alert.alert('Please enter a email');
+      Alert.alert('Please enter your email');
       return;
     }
 
     if (!validateEmail(email)) {
-      Alert.alert('Please enter a valid email');
+      Alert.alert('Please enter valid email');
       return;
     }
     if (password.length <= 0) {
-      Alert.alert('Please enter a password');
+      Alert.alert('Please enter password');
       return;
     }
 
@@ -61,7 +61,7 @@ const SignUpScreen: React.FC<SignUpScreenProps> = ({ navigation }) => {
 
     signUpUser(email, password)
       .then(() => {
-        console.log('User account created & signed in!');
+        console.log('User account created successfully!');
         Alert.alert('Success, please login');
         navigation.goBack();
       })

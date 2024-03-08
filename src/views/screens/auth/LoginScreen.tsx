@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { StackNavigationProp } from '@react-navigation/stack';
-import AuthController from '../../../services/api.service';
+import { signInUser } from '../../../services/api.service';
 
 type RootStackParamList = {
   ForgotPassword: undefined;
@@ -32,42 +32,28 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    const { success, error } = await AuthController.signIn(email, password);
-
-    if (success) {
-      navigation.navigate('TabBar'); 
-    } else {
-      if(email === '') {
-        Alert.alert("Please enter your email address!");
-      } else if(password === '') {
-        Alert.alert("Please enter your password!");
-      } 
-      
-      if (error.code === 'auth/invalid-email') {
-        Alert.alert("The email address is invalid!");
-      } 
-      if (error.code === 'auth/wrong-password' || error.code === 'auth/weak-password') {
-        Alert.alert("The password is invalid!");
-      } 
-      if(error.code === 'auth/network-request-failed') {
-        Alert.alert("Please check your network connection!");
-      } 
-      if(error.code === 'auth/invalid-credential') {
-        Alert.alert("Please enter the valid credentials!");
-      }
-      
-      console.error(error);
+  async function handleLogin() {
+    if (email.length <= 0) {
+      Alert.alert('Please enter your email');
+      return;
     }
-  };
+    if (password.length <= 0) {
+      Alert.alert('Please enter password');
+      return;
+    }
+
+    signInUser(email, password)
+      .then(data => {
+        console.log('Login success!:', data.user.uid);
+        navigation.navigate('TabBar');
+      })
+      .catch(error => {
+        handleLoginError(error);
+        console.error(error);
+      });
+  }
 
   const handleLoginError = (error) => {
-    if(email === '') {
-      Alert.alert("Please enter your email address!");
-    } else if(password === '') {
-      Alert.alert("Please enter your password!");
-    } 
-    
     if (error.code === 'auth/invalid-email') {
       Alert.alert("The email address is invalid!");
     } 
