@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MainOnboardingScreen from './src/views/screens/MainOnboardingScreen';
@@ -12,7 +12,7 @@ import MyFavourites from './src/views/screens/TabScreens/MyFavourites';
 import MyProfile from './src/views/screens/TabScreens/MyProfile'; 
 import HistoryPage from './src/views/screens/TabScreens/HistoryPage'; 
 import HomePage from './src/views/screens/TabScreens/HomePage';
-
+import auth from '@react-native-firebase/auth';
 
 export type RootStackParamList = {
   MainOnboarding: undefined;
@@ -30,10 +30,30 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const App = () => {
+
+  const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState();
+  const [firstScreen, setFirstScreen] = useState('MainOnboarding');
+
+  // Handle user state changes
+  const onAuthStateChanged = (user) => {
+    setUser(user);
+    user === null ? setFirstScreen("MainOnboarding") : setFirstScreen("TabBar")
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber;
+  }, []);
+
+  if (initializing) return null;
   
+  console.log("user: ", user, "initializing: ", initializing, "firstScreen: ", firstScreen)
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MainOnboarding">
+      <Stack.Navigator initialRouteName={firstScreen}>
         <Stack.Screen
           name="MainOnboarding"
           component={MainOnboardingScreen}
@@ -86,7 +106,6 @@ const App = () => {
         />
       </Stack.Navigator>
     </NavigationContainer>
-    // <TabBar/>
   );
 };
 
