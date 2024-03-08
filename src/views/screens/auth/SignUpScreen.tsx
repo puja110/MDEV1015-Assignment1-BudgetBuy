@@ -185,8 +185,8 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     height: 50,
-    borderColor: "gray",
-    borderWidth: 1,
+    borderColor: "#b3b3b3",
+    borderWidth: 0.8,
     paddingHorizontal: 10,
     borderRadius: 20,
     backgroundColor: "#ededed",
@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
   inputPassword: {
     flex: 1,
     height: 50,
-    borderColor: "gray",
-    borderWidth: 0.8,
+    borderColor: "#b3b3b3",
+    borderWidth: 0.7,
     paddingHorizontal: 10,
     borderRadius: 20,
     backgroundColor: "#ededed",
