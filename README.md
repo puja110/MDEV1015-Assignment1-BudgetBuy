@@ -1,6 +1,9 @@
 # MDEV1015-Assignment1-BudgetBuy-
 BudgetBuy is more than just a shopping app—it's a dedication to enabling everyone to purchase sustainably and affordably. By closing the gap between buyers and sellers the app aims to enhance the shopping experience and consider the environment more carefully while purchasing secondhand items.
 
+Firebase console with user data:
+<img width="1503" alt="firebaseconsolewithauthentiondata" src="https://github.com/puja110/MDEV1015-Assignment1-BudgetBuy/assets/26729312/8f6efa92-9436-4144-b634-b1f1693d5131">
+
 Register Screen:
 ![Screenshot_1709891812](https://github.com/puja110/MDEV1015-Assignment1-BudgetBuy/assets/26729312/63c008dd-7e0f-4f02-afed-b10c8a7b1695)
 ![Screenshot_1709891816](https://github.com/puja110/MDEV1015-Assignment1-BudgetBuy/assets/26729312/4cdbda58-cb9f-43a7-bd2f-53f7f6611f66)
