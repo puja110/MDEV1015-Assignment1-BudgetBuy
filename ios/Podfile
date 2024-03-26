@@ -8,6 +8,7 @@ pod 'Firebase', :modular_headers => true
 pod 'FirebaseCoreInternal', :modular_headers => true
 pod 'GoogleUtilities', :modular_headers => true
 pod 'FirebaseCore', :modular_headers => true
+pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
 target 'MDEV1015BudgetBuy' do
   config = use_native_modules!
