@@ -42,7 +42,6 @@ interface Item {
 const HomePage: React.FC = () => {
   return (
     <SafeAreaView style={styles.overlayContainer}>
-      {/* <StatusBar barStyle="black" /> */}
       <View style={{ width: "auto" }}>
         <View style={{ paddingLeft: 15, paddingBottom: 5, paddingRight: 15 }}>
           <View
@@ -133,6 +132,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 10,
+    alignSelf:'center'
   },
 
   messageIcon: {
@@ -150,11 +150,9 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: "#ed930c",
-    // paddingVertical: 10,
     paddingHorizontal: 10,
     height: 50,
-    width: 380,
-    justifyContent: "space-between",
+    width: '96%',
   },
   input: {
     flex: 1,

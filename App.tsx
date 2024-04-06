@@ -37,6 +37,7 @@ const App = () => {
 
   // Handle user state changes
   const onAuthStateChanged = (user) => {
+    console.log("use onAuthStateChangedr: ", user)
     setUser(user);
     user === null ? setFirstScreen("MainOnboarding") : setFirstScreen("TabBar")
     if (initializing) setInitializing(false);
@@ -49,7 +50,7 @@ const App = () => {
 
   if (initializing) return null;
   
-  console.log("user: ", user, "initializing: ", initializing, "firstScreen: ", firstScreen)
+  console.log("user: ", "initializing: ", initializing, "firstScreen: ", firstScreen)
 
   return (
     <NavigationContainer>
